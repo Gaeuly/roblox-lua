@@ -1,9 +1,6 @@
 local cg = game:GetService("CoreGui")
 local ts = game:GetService("TweenService")
 local uis = game:GetService("UserInputService")
-local rs = game:GetService("RunService")
-local players = game:GetService("Players")
-local lp = players.LocalPlayer
 
 for _, v in pairs(cg:GetChildren()) do
     if v.Name == "MoonveilUI" then v:Destroy() end
@@ -14,21 +11,20 @@ sg.Name = "MoonveilUI"
 sg.Parent = cg
 sg.ResetOnSpawn = false
 
--- Asset ID Logo
-local myLogoID = "134665675914525" 
-local logoUrl = "rbxthumb://type=Asset&id=" .. myLogoID .. "&w=150&h=150"
+local mid = "134665675914525" 
+local lUrl = "rbxthumb://type=Asset&id=" .. mid .. "&w=150&h=150"
 
-local openBtn = Instance.new("ImageButton")
-openBtn.Parent = sg
-openBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-openBtn.Position = UDim2.new(0, 20, 0, 20)
-openBtn.Size = UDim2.new(0, 45, 0, 45)
-openBtn.Image = logoUrl
-openBtn.Visible = false
-Instance.new("UICorner", openBtn).CornerRadius = UDim.new(1, 0)
-local openStroke = Instance.new("UIStroke", openBtn)
-openStroke.Color = Color3.fromRGB(128, 0, 255)
-openStroke.Thickness = 2
+local ob = Instance.new("ImageButton")
+ob.Parent = sg
+ob.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+ob.Position = UDim2.new(0, 20, 0, 20)
+ob.Size = UDim2.new(0, 45, 0, 45)
+ob.Image = lUrl
+ob.Visible = false
+Instance.new("UICorner", ob).CornerRadius = UDim.new(1, 0)
+local os = Instance.new("UIStroke", ob)
+os.Color = Color3.fromRGB(128, 0, 255)
+os.Thickness = 2
 
 local function drag(obj, dragObj)
     local drg, inpt, start, pos
@@ -49,7 +45,7 @@ local function drag(obj, dragObj)
     end)
 end
 
-drag(openBtn, openBtn)
+drag(ob, ob)
 
 local main = Instance.new("Frame")
 main.Parent = sg
@@ -61,8 +57,8 @@ main.ClipsDescendants = true
 Instance.new("UICorner", main).CornerRadius = UDim.new(0, 8)
 drag(main, main)
 
-openBtn.MouseButton1Click:Connect(function()
-    openBtn.Visible = false
+ob.MouseButton1Click:Connect(function()
+    ob.Visible = false
     main.Visible = true
 end)
 
@@ -83,7 +79,7 @@ logoLabel.Parent = side
 logoLabel.BackgroundTransparency = 1
 logoLabel.Position = UDim2.new(0, 10, 0, 12)
 logoLabel.Size = UDim2.new(0, 20, 0, 20)
-logoLabel.Image = logoUrl
+logoLabel.Image = lUrl
 
 local title = Instance.new("TextLabel")
 title.Parent = side
@@ -96,18 +92,18 @@ title.TextColor3 = Color3.fromRGB(128, 0, 255)
 title.TextSize = 13
 title.TextXAlignment = Enum.TextXAlignment.Left
 
-local closeBtn = Instance.new("TextButton")
-closeBtn.Parent = side
-closeBtn.BackgroundTransparency = 1
-closeBtn.Position = UDim2.new(0, 10, 1, -35)
-closeBtn.Size = UDim2.new(1, -20, 0, 25)
-closeBtn.Font = Enum.Font.GothamBold
-closeBtn.Text = "Close UI"
-closeBtn.TextColor3 = Color3.fromRGB(150, 150, 150)
-closeBtn.TextSize = 12
-closeBtn.MouseButton1Click:Connect(function()
+local cb = Instance.new("TextButton")
+cb.Parent = side
+cb.BackgroundTransparency = 1
+cb.Position = UDim2.new(0, 10, 1, -35)
+cb.Size = UDim2.new(1, -20, 0, 25)
+cb.Font = Enum.Font.GothamBold
+cb.Text = "Close"
+cb.TextColor3 = Color3.fromRGB(150, 150, 150)
+cb.TextSize = 12
+cb.MouseButton1Click:Connect(function()
     main.Visible = false
-    openBtn.Visible = true
+    ob.Visible = true
 end)
 
 local tabCont = Instance.new("ScrollingFrame")
@@ -130,60 +126,60 @@ local tabs = {}
 local pages = {}
 
 local function CreateTab(name, iconId, isDef)
-    local tBtn = Instance.new("TextButton")
-    tBtn.Parent = tabCont
-    tBtn.BackgroundColor3 = isDef and Color3.fromRGB(128, 0, 255) or Color3.fromRGB(25, 25, 25)
-    tBtn.Size = UDim2.new(1, -20, 0, 30)
-    tBtn.Font = Enum.Font.GothamSemibold
-    tBtn.Text = name
-    tBtn.TextColor3 = isDef and Color3.new(1,1,1) or Color3.fromRGB(150, 150, 150)
-    tBtn.TextSize = 12
-    tBtn.TextXAlignment = Enum.TextXAlignment.Left
-    Instance.new("UICorner", tBtn).CornerRadius = UDim.new(0, 6)
+    local tb = Instance.new("TextButton")
+    tb.Parent = tabCont
+    tb.BackgroundColor3 = isDef and Color3.fromRGB(128, 0, 255) or Color3.fromRGB(25, 25, 25)
+    tb.Size = UDim2.new(1, -20, 0, 30)
+    tb.Font = Enum.Font.GothamSemibold
+    tb.Text = name
+    tb.TextColor3 = isDef and Color3.new(1,1,1) or Color3.fromRGB(150, 150, 150)
+    tb.TextSize = 12
+    tb.TextXAlignment = Enum.TextXAlignment.Left
+    Instance.new("UICorner", tb).CornerRadius = UDim.new(0, 6)
     
-    local tPad = Instance.new("UIPadding", tBtn)
+    local tPad = Instance.new("UIPadding", tb)
     tPad.PaddingLeft = UDim.new(0, 30)
     
-    local tIcon = Instance.new("ImageLabel", tBtn)
-    tIcon.BackgroundTransparency = 1
-    tIcon.Position = UDim2.new(0, -22, 0.5, -8)
-    tIcon.Size = UDim2.new(0, 16, 0, 16)
-    tIcon.Image = iconId
-    tIcon.ImageColor3 = isDef and Color3.new(1,1,1) or Color3.fromRGB(150, 150, 150)
+    local ti = Instance.new("ImageLabel", tb)
+    ti.BackgroundTransparency = 1
+    ti.Position = UDim2.new(0, -22, 0.5, -8)
+    ti.Size = UDim2.new(0, 16, 0, 16)
+    ti.Image = iconId
+    ti.ImageColor3 = isDef and Color3.new(1,1,1) or Color3.fromRGB(150, 150, 150)
     
-    local pScroll = Instance.new("ScrollingFrame")
-    pScroll.Parent = pageCont
-    pScroll.BackgroundTransparency = 1
-    pScroll.Size = UDim2.new(1, 0, 1, 0)
-    pScroll.ScrollBarThickness = 2
-    pScroll.ScrollBarImageColor3 = Color3.fromRGB(128, 0, 255)
-    pScroll.Visible = isDef
+    local ps = Instance.new("ScrollingFrame")
+    ps.Parent = pageCont
+    ps.BackgroundTransparency = 1
+    ps.Size = UDim2.new(1, 0, 1, 0)
+    ps.ScrollBarThickness = 2
+    ps.ScrollBarImageColor3 = Color3.fromRGB(128, 0, 255)
+    ps.Visible = isDef
     
-    local pList = Instance.new("UIListLayout", pScroll)
-    pList.Padding = UDim.new(0, 8)
-    pList:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-        pScroll.CanvasSize = UDim2.new(0, 0, 0, pList.AbsoluteContentSize.Y + 10)
+    local pl = Instance.new("UIListLayout", ps)
+    pl.Padding = UDim.new(0, 8)
+    pl:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        ps.CanvasSize = UDim2.new(0, 0, 0, pl.AbsoluteContentSize.Y + 10)
     end)
     
-    table.insert(tabs, {btn = tBtn, icon = tIcon})
-    table.insert(pages, pScroll)
+    table.insert(tabs, {b = tb, i = ti})
+    table.insert(pages, ps)
     
-    tBtn.MouseButton1Click:Connect(function()
+    tb.MouseButton1Click:Connect(function()
         for _, p in ipairs(pages) do p.Visible = false end
         for _, t in ipairs(tabs) do
-            ts:Create(t.btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(25, 25, 25), TextColor3 = Color3.fromRGB(150, 150, 150)}):Play()
-            ts:Create(t.icon, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(150, 150, 150)}):Play()
+            ts:Create(t.b, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(25, 25, 25), TextColor3 = Color3.fromRGB(150, 150, 150)}):Play()
+            ts:Create(t.i, TweenInfo.new(0.2), {ImageColor3 = Color3.fromRGB(150, 150, 150)}):Play()
         end
-        pScroll.Visible = true
-        ts:Create(tBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(128, 0, 255), TextColor3 = Color3.new(1,1,1)}):Play()
-        ts:Create(tIcon, TweenInfo.new(0.2), {ImageColor3 = Color3.new(1,1,1)}):Play()
+        ps.Visible = true
+        ts:Create(tb, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(128, 0, 255), TextColor3 = Color3.new(1,1,1)}):Play()
+        ts:Create(ti, TweenInfo.new(0.2), {ImageColor3 = Color3.new(1,1,1)}):Play()
     end)
     
     local els = {}
     
     function els:Toggle(txt, cb)
         local f = Instance.new("Frame")
-        f.Parent = pScroll; f.BackgroundColor3 = Color3.fromRGB(20, 20, 20); f.Size = UDim2.new(1, -10, 0, 40)
+        f.Parent = ps; f.BackgroundColor3 = Color3.fromRGB(20, 20, 20); f.Size = UDim2.new(1, -10, 0, 40)
         Instance.new("UICorner", f).CornerRadius = UDim.new(0, 6)
         
         local l = Instance.new("TextLabel")
@@ -211,23 +207,61 @@ local function CreateTab(name, iconId, isDef)
         end)
     end
     
+    function els:Dropdown(txt, opts, cb)
+        local f = Instance.new("Frame")
+        f.Parent = ps; f.BackgroundColor3 = Color3.fromRGB(20, 20, 20); f.ClipsDescendants = true; f.Size = UDim2.new(1, -10, 0, 40)
+        Instance.new("UICorner", f).CornerRadius = UDim.new(0, 6)
+        
+        local b = Instance.new("TextButton")
+        b.Parent = f; b.BackgroundTransparency = 1; b.Size = UDim2.new(1, 0, 0, 40)
+        b.Font = Enum.Font.GothamSemibold; b.Text = "  " .. txt .. " : " .. opts[1]; b.TextColor3 = Color3.new(0.9,0.9,0.9); b.TextSize = 13; b.TextXAlignment = Enum.TextXAlignment.Left
+        
+        local arr = Instance.new("ImageLabel")
+        arr.Parent = f; arr.BackgroundTransparency = 1; arr.Position = UDim2.new(1, -25, 0, 12); arr.Size = UDim2.new(0, 16, 0, 16)
+        arr.Image = "rbxassetid://6031091004"; arr.ImageColor3 = Color3.fromRGB(150, 150, 150)
+        
+        local sf = Instance.new("ScrollingFrame")
+        sf.Parent = f; sf.BackgroundTransparency = 1; sf.Position = UDim2.new(0, 0, 0, 40); sf.Size = UDim2.new(1, 0, 1, -40); sf.ScrollBarThickness = 2
+        local sl = Instance.new("UIListLayout", sf)
+        
+        local opn = false
+        b.MouseButton1Click:Connect(function()
+            opn = not opn
+            local ty = opn and math.min(40 + (#opts * 30), 130) or 40
+            ts:Create(f, TweenInfo.new(0.2), {Size = UDim2.new(1, -10, 0, ty)}):Play()
+            ts:Create(arr, TweenInfo.new(0.2), {Rotation = opn and 180 or 0}):Play()
+        end)
+        
+        for _, v in ipairs(opts) do
+            local ob = Instance.new("TextButton")
+            ob.Parent = sf; ob.BackgroundTransparency = 1; ob.Size = UDim2.new(1, 0, 0, 30)
+            ob.Font = Enum.Font.Gotham; ob.Text = v; ob.TextColor3 = Color3.fromRGB(150, 150, 150); ob.TextSize = 12
+            ob.MouseButton1Click:Connect(function()
+                opn = false
+                ts:Create(f, TweenInfo.new(0.2), {Size = UDim2.new(1, -10, 0, 40)}):Play()
+                ts:Create(arr, TweenInfo.new(0.2), {Rotation = 0}):Play()
+                b.Text = "  " .. txt .. " : " .. v
+                cb(v)
+            end)
+        end
+    end
+
     return els
 end
 
--- ==========================================
--- TABS & TOGGLES
--- ==========================================
+local t1 = CreateTab("General", "rbxassetid://7733658504", true)
+local t2 = CreateTab("Misc", "rbxassetid://7734068321", false)
 
-local tabGeneral = CreateTab("General", "rbxassetid://7733658504", true)
--- Isi tab General nanti disini
+local ncMod = "https://raw.githubusercontent.com/Gaeuly/Moonveil-Hub/main/misc/noclip.lua"
+local spMod = "https://raw.githubusercontent.com/Gaeuly/Moonveil-Hub/main/misc/speed.lua"
 
-local tabMisc = CreateTab("Misc", "rbxassetid://7734068321", false)
+local togNc = loadstring(game:HttpGet(ncMod))()
+local setSp = loadstring(game:HttpGet(spMod))()
 
--- IMPORT MODULE NOCLIP DARI GITHUB
--- JANGAN LUPA GANTI "USERNAME_GITHUB_LU" SAMA USERNAME ASLI LU!
-local noclipModuleURL = "https://raw.githubusercontent.com/Gaeuly/Moonveil-Hub/main/misc/noclip.lua"
-local toggleNoclip = loadstring(game:HttpGet(noclipModuleURL))()
+t2:Toggle("Noclip", function(s) 
+    togNc(s)
+end)
 
-tabMisc:Toggle("Noclip", function(state) 
-    toggleNoclip(state)
+t2:Dropdown("WalkSpeed", {"16 (Default)", "32 (Fast)", "50 (Flash)", "100 (Sonic)"}, function(v)
+    setSp(v)
 end)
